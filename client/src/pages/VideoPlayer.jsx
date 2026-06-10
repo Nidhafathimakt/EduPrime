@@ -13,14 +13,14 @@ function VideoPlayer() {
   const [lessons, setLessons] = useState([]);
   const [currentLesson, setCurrentLesson] = useState(null);
   const [progress, setProgress] = useState(null);
-  const [loading, setLoading] = useState(true);
+  
 
   const currentIndex = lessons.findIndex((l) => l._id === currentLesson?._id);
 
   // GET DATA
   const fetchData = async () => {
     try {
-      setLoading(true);
+      
 
       const courseRes = await axiosPrivate.get(`/api/course/${courseId}`);
 
@@ -42,9 +42,7 @@ function VideoPlayer() {
       setCurrentLesson(lessonRes.data.data?.[0] || null);
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   useEffect(() => {
@@ -79,10 +77,7 @@ function VideoPlayer() {
     }
   };
 
-  if (loading) {
-    return <p className="p-10 text-center text-white">Loading...</p>;
-  }
-
+ 
   return (
     <div className="flex min-h-screen flex-col bg-gray-950 lg:flex-row">
       {/* MAIN */}

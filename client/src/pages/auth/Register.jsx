@@ -7,7 +7,7 @@ function Register() {
     name: "",
     email: "",
     password: "",
-    role: "student",
+    // role: "student",
   });
 
   const { postRegister } = AuthService();
@@ -61,7 +61,7 @@ function Register() {
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
               />
             </div>
-            <div>
+            {/* <div>
               <label className="mb-1 block text-sm font-medium">
                 I want to
               </label>
@@ -73,7 +73,7 @@ function Register() {
                 <option value="student">Learn as a Student</option>
                 <option value="instructor">Teach as an Instructor</option>
               </select>
-            </div>
+            </div> */}
             <button
               type="submit"
               disabled={loading}
@@ -83,7 +83,7 @@ function Register() {
             </button>
           </form>
           <p className="mt-4 text-center text-sm text-gray-500">
-            Already have an account?{" "}
+            Already have an account?
             <Link
               to="/login"
               className="font-medium text-primary-600 hover:underline"

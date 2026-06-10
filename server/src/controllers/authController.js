@@ -4,14 +4,25 @@ const User = require("../models/User");
 const { MongoExpiredSessionError } = require("mongodb");
 
 let register = async (req, res) => {
-  const { name, email, password, role } = req.body;
+
+ 
+  const { name, email, password } = req.body;
+
+   const allowedRoles = ["student", "instructor"];
+
+if (!allowedRoles.includes(role)) {
+  return res.status(400).json({
+    success: false,
+    message: "Invalid role",
+  });
+}
   const userExist = await User.findOne({ email });
   if (userExist)
     return res.status(400).json({
       message: "User exists",
     });
   const hashedPassword = await bcrypt.hash(password, 10);
-  await User.create({ name, email, password: hashedPassword, role });
+  await User.create({ name, email, password: hashedPassword});
   res.status(201).json({
     message: "Registered Successfully",
   });

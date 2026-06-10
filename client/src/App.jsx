@@ -11,7 +11,7 @@ import Notifications from "./pages/Notifications";
 import VideoPlayer from "./pages/VideoPlayer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ShopProvider } from "./context/ShopContext";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Dashboard from "./components/Dashboard";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import MyCourses from "./pages/student/MyCourses";
@@ -34,7 +34,12 @@ import {
   Users,
   CheckSquare,
   CreditCard,
+  UserPlus,
 } from "lucide-react";
+
+import SuperAdminDashboard from "./pages/superAdmin/SuperAdminDashboard";
+import AdminList from "./pages/superAdmin/AdminList";
+import CreateAdmin from "./pages/superAdmin/CreateAdmin";
 
 const studentNav = [
   { path: "/student/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -56,6 +61,23 @@ const adminNav = [
   { path: "/admin/subscriptions", label: "Subscriptions", icon: CreditCard },
 ];
 
+const superAdminNav = [
+  {
+    path: "/superadmin/dashboard",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    path: "/superadmin/create-admin",
+    label: "Create Admin",
+    icon: UserPlus,
+  },
+  {
+    path: "/superadmin/admins",
+    label: "Manage Admins",
+    icon: Users,
+  },
+];
 function App() {
   return (
     <BrowserRouter>
@@ -130,6 +152,20 @@ function App() {
                   path="subscriptions"
                   element={<SubscriptionManagement />}
                 />
+              </Route>
+
+              <Route
+                path="superadmin"
+                element={
+                  <ProtectedRoute roles={["superadmin"]}>
+                    <Dashboard navItems={superAdminNav} title="Super Admin" />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<SuperAdminDashboard />} />
+                <Route path="dashboard" element={<SuperAdminDashboard />} />
+                <Route path="create-admin" element={<CreateAdmin />} />
+                <Route path="admins" element={<AdminList />} />
               </Route>
             </Route>
           </Routes>

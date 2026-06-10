@@ -18,8 +18,6 @@ function Courses() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const { getCourses } = CourseService();
 
   const search = searchParams.get("search") || "";
@@ -38,30 +36,42 @@ function Courses() {
 
   const fetchCourses = async () => {
     try {
-      setLoading(true);
 
       const response = await getCourses();
 
       console.log("API RESPONSE:", response);
-
+      console.log("FIRST COURSE:", response.data[0]);
       if (!response?.success) {
         setCourses([]);
-        setLoading(false);
+        
         return;
       }
-
+      console.log("Selected Category:", category);
       let filtered = response.data || [];
 
       filtered = filtered.filter((course) =>
         course.status ? course.status === "approved" : true,
       );
 
+      if (category) {
+        filtered = filtered.filter((course) => course.category === category);
+      }
+      console.log("Filtered Courses:", filtered);
+
+      if (level) {
+        filtered = filtered.filter((course) => course.level === level);
+      }
+
+      if (search) {
+        filtered = filtered.filter((course) =>
+          course.title.toLowerCase().includes(search.toLowerCase()),
+        );
+      }
+
       setCourses(filtered);
     } catch (error) {
       console.log("GET COURSES ERROR:", error);
       setCourses([]);
-    } finally {
-      setLoading(false);
     }
   };
   useEffect(() => {
@@ -131,9 +141,7 @@ function Courses() {
 
         {/* COURSES */}
         <div className="flex-1">
-          {loading ? (
-            <p className="py-12 text-center">Loading...</p>
-          ) : courses.length === 0 ? (
+          {courses.length === 0 ? (
             <p className="py-12 text-center text-gray-500">No courses found</p>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">

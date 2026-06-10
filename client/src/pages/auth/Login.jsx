@@ -38,10 +38,12 @@ function Login() {
         });
 
         toast.success("Login Successful");
+        console.log("Role:", user.role);
         const paths = {
           student: "/student/dashboard",
           instructor: "/instructor/dashboard",
-          superadmin: "/admin/dashboard",
+          admin: "/admin/dashboard",
+          superadmin: "/superadmin/dashboard",
         };
         navigate(paths[user.role] || "/");
       }

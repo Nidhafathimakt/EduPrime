@@ -5,7 +5,7 @@ const subscriptionPlanSchema = new mongoose.Schema(
     name: { type: String, required: true },
     slug: {
       type: String,
-      enum: ["monthly", "quarterly", "yearly"],
+      enum: ["monthly", "quarterly", "one time"],
       required: true,
       unique: true,
     },

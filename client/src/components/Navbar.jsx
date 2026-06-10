@@ -10,7 +10,8 @@ const Navbar = () => {
   const dashboardPath = {
     student: "/student/dashboard",
     instructor: "/instructor/dashboard",
-    superadmin: "/admin/dashboard",
+    admin: "/admin/dashboard",
+    superadmin: "/superadmin/dashboard",
   };
   return (
     <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur ">

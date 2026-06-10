@@ -12,7 +12,7 @@ function CourseDetail() {
 
   const [course, setCourse] = useState(null);
   const [lessons, setLessons] = useState([]);
-  const [loading, setLoading] = useState(true);
+
   const [enrolling, setEnrolling] = useState(false);
 
   useEffect(() => {
@@ -31,10 +31,11 @@ function CourseDetail() {
     return `http://localhost:5000/uploads/${thumb}`;
   };
 
+ 
   //  FETCH DATA
   const fetchData = async () => {
     try {
-      setLoading(true);
+      
 
       // GET COURSE
       const res = await getCourseById(id);
@@ -57,14 +58,20 @@ function CourseDetail() {
     } catch (err) {
       console.log(err);
       toast.error("Failed to load course");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   //  ENROLL
   const handleEnroll = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+if (user?.role !== "student") {
+  toast.error("Only students can enroll in courses");
+  return;
+}
     try {
+       
+
       setEnrolling(true);
 
       const res = await axiosPrivate.post(`/api/entroll/enroll/${id}`);
@@ -82,10 +89,9 @@ function CourseDetail() {
     }
   };
 
-  // LOADING STATE
-  if (loading) {
-    return <p className="p-10 text-center">Loading course...</p>;
-  }
+
+ 
+  
 
   // NO COURSE STATE
   if (!course) {

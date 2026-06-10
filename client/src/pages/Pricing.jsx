@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Check } from "lucide-react";
+import { Check, IndianRupee } from "lucide-react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { toast } from "react-toastify";
 
 function Pricing() {
-  const [loading, setLoading] = useState(true);
+  
   const [subscribing, setSubscribing] = useState(null);
   const axiosPrivate = useAxiosPrivate();
   const { fetchPlans, plans } = useContext(ShopContext);
@@ -15,8 +15,8 @@ function Pricing() {
       try {
         const response = await fetchPlans();
         console.log("Plans API:", response);
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        console.log(error)
       }
     };
 
@@ -24,6 +24,7 @@ function Pricing() {
   }, []);
 
   const handleSubscribe = async (planId) => {
+  
     try {
       setSubscribing(planId);
 
@@ -64,7 +65,7 @@ function Pricing() {
             )}
             <h3 className="text-xl font-bold">{plan.name}</h3>
             <p className="mt-2">
-              <span className="text-4xl font-extrabold">${plan.price}</span>
+              <span className="text-4xl font-extrabold flex"><IndianRupee className="mt-2.5" />{plan.price}</span>
             </p>
             <ul className="mt-6 space-y-3">
               {plan.features?.map((f) => (

@@ -8,6 +8,7 @@ const adminRoute = require("./src/routes/adminRoute");
 const lessonRoute = require("./src/routes/lessonRoute");
 const entrollRoute = require("./src/routes/entrollRoute");
 const progressRoute = require("./src/routes/progressRoute");
+const superAdminRoute = require("./src/routes/superAdminRoute")
 
 require("dotenv").config();
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/admin", adminRoute);
 app.use("/api/lesson", lessonRoute);
 app.use("/api/entroll", entrollRoute);
 app.use("/api/progress", progressRoute);
+app.use("/api/super-admin", superAdminRoute)
 app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {

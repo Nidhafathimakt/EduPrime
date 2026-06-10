@@ -1,4 +1,4 @@
-import { ArrowRight, Play, Award, Users, BookOpen } from "lucide-react";
+import { ArrowRight, Play, Award, Users, BookOpen, IndianRupee } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
@@ -38,7 +38,7 @@ const testimonials = [
 function Home() {
   const [featured, setFeatured] = useState([]);
 
-  const [loading, setLoading] = useState(true);
+
   const { fetchPlans, plans } = useContext(ShopContext);
   const { getCourses } = CourseService();
   useEffect(() => {
@@ -189,9 +189,9 @@ function Home() {
                 }`}
               >
                 <h3 className="text-lg font-bold">{plan.name}</h3>
-                <p className="mt-2 text-3xl font-extrabold">
-                  ${plan.price}
-                  <span className="text-sm font-normal opacity-70">/plan</span>
+                <p className="mt-2 text-3xl font-extrabold flex justify-center ">
+                  <IndianRupee className="mt-2.5" /> {plan.price}
+                  <span className="text-sm font-normal opacity-70 mt-2.5"> /plan</span>
                 </p>
                 <ul className="mt-4 space-y-2 text-sm">
                   {plan.features?.slice(0, 4).map((f) => (

@@ -16,11 +16,12 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
     },
     password: { type: String, required: true, minlength: 6 },
+
     role: {
-      type: String,
-      enum: ["student", "instructor", "superadmin"],
-      default: "student",
-    },
+  type: String,
+  enum: ["student", "instructor", "admin", "superadmin"],
+  default: "student",
+},
     subscription: {
       plan: { type: mongoose.Schema.Types.ObjectId, ref: "SubscriptionPlan" },
       startDate: Date,
@@ -28,10 +29,9 @@ const userSchema = new mongoose.Schema(
       isActive: { type: Boolean, default: false },
     },
     enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
-    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
     isVerified: { type: Boolean, default: true },
   },
-  { timeStamps: true },
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("User", userSchema);

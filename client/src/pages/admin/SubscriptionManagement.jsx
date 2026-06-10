@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import SubscriptionService from "../../services/adminApiService/SubscriptionService";
 import { toast } from "react-toastify";
 import { ShopContext } from "../../context/ShopContext";
+import { Check, IndianRupee } from "lucide-react";
+
 function SubscriptionManagement() {
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
@@ -27,7 +29,7 @@ function SubscriptionManagement() {
         ...form,
         price: Number(form.price),
         duration: Number(form.duration),
-        features: form.features.split(",").map((item) => item.trim()),
+        features: form.features.split("\n").map((item) => item.trim()) 
       };
 
       const response = await createPlan(payload);
@@ -55,11 +57,12 @@ function SubscriptionManagement() {
         {plans.map((plan) => (
           <div key={plan._id} className="card">
             <h3 className="font-semibold">{plan.name}</h3>
-            <p className="text-2xl font-bold mt-1">${plan.price}</p>
+            <p className="text-2xl font-bold  flex"> <IndianRupee className="mt-2 h-5 w-5" />{plan.price}.00</p>
             <p className="text-sm text-gray-500 capitalize">{plan.slug}</p>
-            <ul className="mt-3 space-y-1 text-sm">
+            <ul className="mt-3 space-y-1 text-sm ">
               {plan.features?.map((f) => (
-                <li key={f}>• {f}</li>
+                <li key={f} className="flex gap-2" ><Check className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />{f}</li>
+                
               ))}
             </ul>
           </div>
@@ -80,8 +83,8 @@ function SubscriptionManagement() {
           onChange={(e) => setForm({ ...form, slug: e.target.value })}
         >
           <option value="monthly">Monthly</option>
-          <option value="quarterly">Quarterly</option>
-          <option value="yearly">Yearly</option>
+          <option value="quarterly">Quartely</option>
+          <option value="one time">One time</option>
         </select>
         <input
           type="number"
