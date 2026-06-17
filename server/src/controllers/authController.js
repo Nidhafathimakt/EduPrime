@@ -6,7 +6,10 @@ const { MongoExpiredSessionError } = require("mongodb");
 let register = async (req, res) => {
 
  
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
+
+ console.log(req.body);
+console.log("Role:", role);
 
    const allowedRoles = ["student", "instructor"];
 

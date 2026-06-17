@@ -80,7 +80,7 @@ function UserManagement() {
                 <td className="py-3 pr-4">{u.email}</td>
                 <td className="py-3 pr-4 capitalize">{u.role}</td>
                 <td className="py-3 flex gap-2">
-                  {u.role !== "superadmin" && (
+                  {u.role !== "superadmin" && u.role !== "admin" && (
                     <>
                       <select
                         value={u.role}
