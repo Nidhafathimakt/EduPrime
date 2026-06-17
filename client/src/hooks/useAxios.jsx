@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useAuth from "./useAuth";
-import axios from "../axios.jsx";
+import axios from "../Axios";
 
 const useAxios = () => {
   const { auth, setAuth } = useAuth();

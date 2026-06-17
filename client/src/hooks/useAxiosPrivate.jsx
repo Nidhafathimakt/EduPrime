@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import useAuth from "./useAuth";
-import { axiosPrivate } from "../axios.jsx";
+import { axiosPrivate } from "../Axios";
 
 const useAxiosPrivate = () => {
   const { auth, setAuth } = useAuth();
