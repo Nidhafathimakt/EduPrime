@@ -33,8 +33,9 @@ if (!allowedRoles.includes(role)) {
 
 let login = async (req, res) => {
   const { email, password } = req.body;
+  console.log("login", req.body)
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email});
   if (!user)
     return res.status(400).json({
       message: "Invalid Email",
@@ -46,10 +47,17 @@ let login = async (req, res) => {
       message: "Invalid password",
     });
 
-  const token = jwt.sign({ id: user._id }, process.env.jwt_SECRET, {
+     console.log("JWT_SECRET:", process.env.JWT_SECRET);
+  console.log("========== ENV ==========");
+console.log("JWT_SECRET =", process.env.JWT_SECRET);
+console.log("MONGO_URI =", !!process.env.MONGO_URI);
+console.log("=========================");
+
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
-
+ 
   res.status(200).json({
     success: true,
     token,
