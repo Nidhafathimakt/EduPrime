@@ -1,10 +1,56 @@
 const Course = require("../models/Course");
 const User = require("../models/User");
+const { uploadToCloudinary } = require("../middleware/upload");
+// const createCourse = async (req, res) => {
+
+//   try {
+   
+
+//     const { title, description, category, level, price } = req.body;
+//     const result = req.file
+//   ? await uploadToCloudinary(req.file.buffer)
+//   : null;
+
+//     if (!title || !description || !category) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Title, description, category are required",
+//       });
+//     }
+
+//     const course = await Course.create({
+//       title,
+//       description,
+//       category,
+//       level,
+//       price,
+//       thumbnail: req.file ? req.file.path : "",
+//       instructor: req.userId,
+//     });
+
+//     res.status(201).json({
+//       success: true,
+//       data: course,
+//     });
+//   // } catch (error) {
+//   //   res.status(500).json({
+//   //     success: false,
+//   //     message: error.message,
+//   //   });
+//   }
+//   catch (error) {
+//   console.log("CREATE COURSE ERROR:", error);
+
+//   res.status(500).json({
+//     success: false,
+//     message: error.message,
+//     stack: error.stack,
+//   });
+// }
+// };
 
 const createCourse = async (req, res) => {
   try {
-   
-
     const { title, description, category, level, price } = req.body;
 
     if (!title || !description || !category) {
@@ -14,13 +60,20 @@ const createCourse = async (req, res) => {
       });
     }
 
+    let thumbnailUrl = "";
+
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      thumbnailUrl = result.secure_url;
+    }
+
     const course = await Course.create({
       title,
       description,
       category,
       level,
       price,
-      thumbnail: req.file ? req.file.path : "",
+      thumbnail: thumbnailUrl,
       instructor: req.userId,
     });
 
@@ -28,22 +81,17 @@ const createCourse = async (req, res) => {
       success: true,
       data: course,
     });
-  // } catch (error) {
-  //   res.status(500).json({
-  //     success: false,
-  //     message: error.message,
-  //   });
-  }
-  catch (error) {
-  console.log("CREATE COURSE ERROR:", error);
+  } catch (error) {
+    console.log("CREATE COURSE ERROR:", error);
 
-  res.status(500).json({
-    success: false,
-    message: error.message,
-    stack: error.stack,
-  });
-}
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      stack: error.stack,
+    });
+  }
 };
+
 const getCourse = async (req, res) => {
   try {
     const courses = await Course.find()
