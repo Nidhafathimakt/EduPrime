@@ -47,13 +47,9 @@ let login = async (req, res) => {
       message: "Invalid password",
     });
 
-     console.log("JWT_SECRET:", process.env.JWT_SECRET);
-  console.log("========== ENV ==========");
+     
+
 console.log("JWT_SECRET =", process.env.JWT_SECRET);
-console.log("MONGO_URI =", !!process.env.MONGO_URI);
-console.log("=========================");
-
-
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
