@@ -3,8 +3,7 @@ const User = require("../models/User");
 
 const createCourse = async (req, res) => {
   try {
-    console.log("BODY:", req.body);
-    console.log("FILE:", req.file);
+   
 
     const { title, description, category, level, price } = req.body;
 
@@ -21,7 +20,7 @@ const createCourse = async (req, res) => {
       category,
       level,
       price,
-      thumbnail: req.file ? req.file.filename : "",
+      thumbnail: req.file ? req.file.path : "",
       instructor: req.userId,
     });
 
@@ -29,12 +28,21 @@ const createCourse = async (req, res) => {
       success: true,
       data: course,
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+  // } catch (error) {
+  //   res.status(500).json({
+  //     success: false,
+  //     message: error.message,
+  //   });
   }
+  catch (error) {
+  console.log("CREATE COURSE ERROR:", error);
+
+  res.status(500).json({
+    success: false,
+    message: error.message,
+    stack: error.stack,
+  });
+}
 };
 const getCourse = async (req, res) => {
   try {
@@ -110,7 +118,7 @@ const updateCourse = async (req, res) => {
     };
 
     if (req.file) {
-      updateData.thumbnail = req.file.filename;
+      updateData.thumbnail = req.file.path;
     }
 
     const updatedCourse = await Course.findByIdAndUpdate(
@@ -201,7 +209,7 @@ const uploadThumbnail = async (req, res) => {
       });
     }
 
-    course.thumbnail = req.file.filename;
+    course.thumbnail = req.file.path;
 
     await course.save();
 

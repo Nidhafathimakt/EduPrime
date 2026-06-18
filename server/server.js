@@ -68,7 +68,7 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
 // Routes
 app.use("/api/user", authRoute);
@@ -86,24 +86,6 @@ app.get("/", (req, res) => {
 });
 
 // MongoDB Connection
-// const connectDB = async () => {
-//   try {
-//     console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
-
-//     await mongoose.connect(process.env.MONGO_URI);
-
-//     console.log(" MongoDB Connected");
-
-//     const PORT = process.env.PORT || 5000;
-
-//     // app.listen(PORT, () => {
-//     //   console.log(` Server running on port ${PORT}`);
-//     // });
-//   } catch (error) {
-//     console.error(" MongoDB Connection Error:", error);
-//     process.exit(1);
-//   }
-// };
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
@@ -115,6 +97,3 @@ const connectDB = async () => {
 
 connectDB();
 
-module.exports = app;
-
-connectDB();

@@ -33,6 +33,7 @@ router.put(
   uploadThumbnail,
 );
 
+
 router.put("/:id/approve", authMiddleware, approveCourse);
 
 router.put("/:id/reject", authMiddleware, rejectCourse);
